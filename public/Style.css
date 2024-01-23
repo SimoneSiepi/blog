@@ -1,0 +1,121 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin: 0;
+  background-color: cornflowerblue;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between; /* Allinea gli elementi su entrambi i lati del container */
+  align-items: center; /* Centra verticalmente gli elementi */
+}
+
+#admin_log h1 {
+  text-align: center;
+  background-color: cornflowerblue;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin: 0;
+}
+
+.container_log {
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+#link_admin {
+  margin-top: 0;
+}
+
+#link_admin a {
+  text-decoration: none;
+  color: white;
+}
+
+.post-container {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+#admin_log {
+    text-align: center;
+    background-color: #3498db;
+    color: white;
+}
+
+#admin_log h1 {
+    margin: 0;
+}
+
+#form_log {
+    margin-top: 20px;
+}
+
+.label_log{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.input_log {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #27ae60;
+    color: white;
+    cursor: pointer;
+}
+
+#h3SezAdmin{
+  padding: 5px;
+  margin: 0;
+}
+
+#link_newPost{
+  margin-bottom: 10px;
+}
+
+footer {
+  background-color: cornflowerblue;
+  color: white;
+  padding: 10px;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer_text {
+  margin: 0;
+}

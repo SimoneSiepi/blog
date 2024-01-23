@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h2 Aggiungi Nuovo Post
+  form(action='/admin/posts', method='POST')
+    label(for='title') Titolo:
+    input(type='text', id='title', name='title', required)
+    br
+    label(for='content') Contenuto:
+    textarea(id='content', name='content', required)
+    br
+    input(type='submit', value='Pubblica')

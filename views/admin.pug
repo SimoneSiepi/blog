@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h2(id='titolo_sezione_admin') Amministrazione del Blog
+
+  // Link per aggiungere un nuovo post
+  a(href='/admin/new',id='link_newPost') Aggiungi Nuovo Post
+
+  if posts.length > 0
+    // Elenco dei post con opzione di cancellazione
+    each post in posts
+      div(class='post-container')
+        h3(id='h3SezAdmin')= post.title
+        p= post.content
+        div(class='box_mod_admin')
+          a(href='/admin/delete/' + post.id) Cancella
+          a(href="#") modifica 
+
+  else
+    p Nessun post presente

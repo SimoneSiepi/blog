@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  each post in posts
+    div(class='post-container')
+      h2= post.title
+      a(href='/posts/' + post.id, class='read-more') Leggi di più
