@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const port=3000;
 
 app.set('view engine', 'pug');
@@ -17,6 +18,20 @@ app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(session({
+  secret: 'il-nostro-segreto',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+const verifcaAut = (req, res, next) => {
+  if (req.session && req.session.verifcata) {
+    return next();
+  } else {
+    res.redirect('/logAdmin?error=1');
+  }
+};
+
 
 app.get('/', (req, res) => {
   res.render('index', { posts });
@@ -31,13 +46,14 @@ app.get('/posts/:id', (req, res) => {
 app.post('/admin',(req,res)=>{
   const { admin_name, admin_password } = req.body;
   if (admin_name==='admin1' && admin_password==='123456789') {
+    req.session.verifcata=true;
     res.redirect('admin');
   }else{
-    res.redirect('/logAdmin?error=1');
+    res.redirect('logAdmin.html?error=1');
   }
 });
 
-app.get('/admin', (req, res) => {
+app.get('/admin',verifcaAut,(req, res) => {
   res.render('admin',{ posts });
 });
 

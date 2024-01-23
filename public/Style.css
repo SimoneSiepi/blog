@@ -119,3 +119,11 @@ footer {
 .footer_text {
   margin: 0;
 }
+
+.error{
+  border: 1px solid red;
+}
+
+.correct{
+  border: 1px solid green;
+}
