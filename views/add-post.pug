@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  h2 Aggiungi Nuovo Post
-  form(action='/admin/posts', method='POST')
+  h2(class='headerNewPost') Aggiungi Nuovo Post
+  form(action='/admin/posts', method='POST', class='formNewPost')
     label(for='title') Titolo:
-    input(type='text', id='title', name='title', required)
+    input(type='text', id='title', name='title',class='titleInputNewPost' , required)
     br
-    label(for='content') Contenuto:
-    textarea(id='content', name='content', required)
+    label(for='content') Testo:
+    textarea(id='content', name='content',class='textInputNewPost' ,required)
     br
-    input(type='submit', value='Pubblica')
+    input(type='submit', value='Pubblica', id='submitNewPost')
