@@ -44,11 +44,14 @@ body {
 
 #link_admin {
   margin-top: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 #link_admin a {
   text-decoration: none;
   color: white;
+  padding-left: 10px;
 }
 
 .post-container {
@@ -106,6 +109,60 @@ input[type="submit"] {
 
 #link_newPost{
   margin-bottom: 10px;
+}
+
+.titleInputNewPost,
+.textInputNewPost {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.headerNewPost {
+  color: #333;
+  text-align: center;
+}
+
+.formNewPost{
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#submitNewPost {
+  display: block;
+  margin: 0 auto; /* Centra orizzontalmente */
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px; /* Fai un bordo più arrotondato */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#submitNewPost:hover {
+  background-color: #45a049;
+}
+
+#postTitle {
+  text-align: center;
+}
+
+#postContent {
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  padding: 20px;
+  background-color: #fff; 
+  margin: 20px auto; 
+  max-width: 600px; 
 }
 
 footer {
