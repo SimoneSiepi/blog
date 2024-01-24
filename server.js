@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const path = require('path');
 const port=3000;
 
 app.set('view engine', 'pug');
@@ -55,6 +56,15 @@ app.post('/admin',(req,res)=>{
 
 app.get('/admin',verifcaAut,(req, res) => {
   res.render('admin',{ posts });
+});
+
+app.get('/log',(req, res) => {//pezzo di codice che serve a far in modo che quando si è gia autenticati non ti fa passare per log
+  if (req.session.verifcata) {
+    res.render('admin',{ posts });
+  }else{
+    const logAdminPath = path.join(__dirname, 'public', 'logAdmin.html');
+    res.sendFile(logAdminPath);
+  }
 });
 
 app.post('/admin/posts', (req, res) => {
