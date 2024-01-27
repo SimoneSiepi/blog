@@ -1,0 +1,21 @@
+[
+    {
+      "id":1,
+      "title": "casa",
+      "content": "Contenuto del primo post. Contenuto del primo post.",
+      "immagine": "casa.jpg",
+      "comments": [
+        {"username": "", "contenuto": ""}
+      ]
+    },
+    {
+      "id":2,
+      "title": "macchina",
+      "content": "Contenuto del secondo post. Contenuto del secondo post.",
+      "immagine": "27012024_macchina.jpeg",
+      "comments": [
+        {"username": "", "contenuto": ""}
+      ]
+    }
+  ]
+  
