@@ -1,10 +1,25 @@
 extends layout
 
 block content
-	if post
+	if copiaPost
+		div(class="box-immagine")
+			img(src=copiaPost.immagine alt="niente" class="img")
 		div
-			h2(id='postTitle')= post.title
-			p(id='postContent')= post.content
+			h2(id='postTitle')= copiaPost.title
+			p(id='postContent')= copiaPost.content
+		div(class='box-commenti')
+			h3(id="h3Commenti") commenti
+			each comment in copiaPost.Comment
+				p=comment.username+": "+comment.contenuto
+		div(class="newComment")
+			form(action="/addCommento/:id", method="post") 
+				label(for="autore") username
+				input(type="text" name='autore' id='autore' required)
+				br
+				label(for="contenuto") commenta
+				input(type="text" name='contenuto' id='contenuto' required)
+				br
+				input(type="submit", value="commenta" id='commentSubmit')
 	else
 		p Post non trovato
 	

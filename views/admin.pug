@@ -6,9 +6,9 @@ block content
   // Link per aggiungere un nuovo post
   a(href='/admin/new',id='link_newPost') Aggiungi Nuovo Post
 
-  if posts.length > 0
+  if dati.length > 0
     // Elenco dei post con opzione di cancellazione
-    each post in posts 
+    each post in dati  
       div(class='post-container')
         h3(id='h3SezAdmin')= post.title
         p= post.content

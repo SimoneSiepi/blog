@@ -69,6 +69,17 @@ body {
   display: block;
 }
 
+.box-immagine {
+  text-align: center; 
+}
+
+.img {
+  max-width: 30%; 
+  height: auto; 
+  display: block; /* Impedisce l'aggiunta di spazi extra sotto l'immagine */
+  margin: 0 auto; 
+}
+
 #admin_log {
     text-align: center;
     background-color: #3498db;
@@ -107,12 +118,13 @@ input[type="submit"] {
   margin: 0;
 }
 
-#link_newPost{
+#link_newPost {
   margin-bottom: 10px;
 }
 
 .titleInputNewPost,
-.textInputNewPost {
+.textInputNewPost,
+#img {
   width: 100%;
   padding: 8px;
   margin-bottom: 16px;
@@ -126,7 +138,7 @@ input[type="submit"] {
   text-align: center;
 }
 
-.formNewPost{
+.formNewPost {
   max-width: 600px;
   margin: 20px auto;
   background-color: #fff;
@@ -137,12 +149,13 @@ input[type="submit"] {
 
 #submitNewPost {
   display: block;
-  margin: 0 auto; /* Centra orizzontalmente */
+  margin: 0 auto;
+  margin-top: 10px;
   background-color: #4caf50;
   color: #fff;
-  padding: 10px 15px;
+  padding: 5px 10px;
   border: none;
-  border-radius: 20px; /* Fai un bordo più arrotondato */
+  border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
 }
@@ -164,6 +177,58 @@ input[type="submit"] {
   margin: 20px auto; 
   max-width: 600px; 
 }
+
+.box-commenti {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+#h3Commenti {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.comment {
+  margin-bottom: 10px;
+}
+
+.newComment {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+#autore,
+#contenuto {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#commentSubmit {
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px; /* Ridotto il padding per un aspetto più compatto */
+  border: none;
+  border-radius: 4px; /* Bordi leggermente arrotondati */
+  cursor: pointer;
+  font-size: 14px; /* Ridotto il font-size */
+}
+
+#commentSubmit:hover {
+  background-color: #2980b9;
+}
+
 
 footer {
   background-color: cornflowerblue;
