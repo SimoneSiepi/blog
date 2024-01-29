@@ -86,9 +86,9 @@ app.get("/", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
   let post = dati.find(post => post.id == req.params.id);
-  let copiaPost = JSON.parse(JSON.stringify(post));//deep copy di post su cui ci posso lavorare in sicurezza
+  let copiaPost = post;//deep copy di post su cui ci posso lavorare in sicurezza
   console.log(copiaPost);
-  copiaPost.immagine = "/"+copiaPost.immagine;
+  copiaPost.immagine =copiaPost.immagine;
   res.render("post", { copiaPost });
 });
 
@@ -152,7 +152,7 @@ app.post("/addCommento/:id", (req, res) => {
     save();
   }
   
-  res.redirect("/posts/" + req.params.id);
+  res.redirect("/posts/" + postId);
 });
 
 

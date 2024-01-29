@@ -3,7 +3,7 @@ extends layout
 block content
 	if copiaPost
 		div(class="box-immagine")
-			img(src=copiaPost.immagine alt="niente" class="img")
+			img(src="/"+copiaPost.immagine alt="niente" class="img")
 		div
 			h2(id='postTitle')= copiaPost.title
 			p(id='postContent')= copiaPost.content
@@ -12,7 +12,7 @@ block content
 			each comment in copiaPost.Comment
 				p=comment.username+": "+comment.contenuto
 		div(class="newComment")
-			form(action="/addCommento/:id", method="post") 
+			form(action="/addCommento/"+copiaPost.id, method="post") 
 				label(for="autore") username
 				input(type="text" name='autore' id='autore' required)
 				br
