@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
-const fs = require("fs"); 
+const fs = require("fs").promises; 
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const path = require("path");
 const multer = require("multer");
 const port = 3000;
 
-const rottaPublica = path.join(__dirname, "public");
+async function avvioServer() {
+  const rottaPublica = path.join(__dirname, "public");
 const rottaUploads = path.join(__dirname, "uploads");
 
 const adminAutorizzati = [
@@ -25,26 +26,28 @@ app.use(express.static(rottaUploads));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 /* gestione json  */
-const dati=read();
+const dati=await read();
 
-function read() {
+async function read() {
   try {
-    const datiJson = fs.readFileSync("dati.json", 'utf-8');
-    // Converte il contenuto JSON in un oggetto JavaScript
+    const datiJson = await fs.readFile("dati.json", 'utf-8');
     return JSON.parse(datiJson);
   } catch (error) {
-    console.log(error);
+    console.error("Errore durante la lettura del file:", error);
     return [];
   }
 }
 
-function write(datiJson) {//scrive nel file json con unaindendazione di uno spazio
-  fs.writeFileSync("dati.json", JSON.stringify(datiJson, null, 1), 'utf-8');
-  
+async function write(datiJson) {
+  try {
+    await fs.writeFile("dati.json", JSON.stringify(datiJson, null, 1), 'utf-8');
+  } catch (error) {
+    console.error("Errore durante la scrittura del file:", error);
+  }
 }
 
-function save() {
-  write(dati);
+async function save() {
+  await write(dati);
 }
 
 //setto le sessioni
@@ -58,10 +61,11 @@ app.use(
 
 //midleware che verifica se ho gia fatto l'accesso
 const verifcaAut = (req, res, next) => {
-  if (req.session && req.session.verifcata) {
+  if (req.session && req.session.verificata) {
     return next();
   } else {
-    res.redirect("/logAdmin?error=1");
+    console.log("midleware");
+    res.redirect("/../logAdmin.html?error=1");
   }
 };
 
@@ -86,18 +90,19 @@ app.get("/", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
   let post = dati.find(post => post.id == req.params.id);
-  let copiaPost = post;//deep copy di post su cui ci posso lavorare in sicurezza
-  console.log(copiaPost);
-  copiaPost.immagine =copiaPost.immagine;
+  let copiaPost = post;//post su cui ci posso lavorare in sicurezza
+  //console.log(copiaPost);
+  //copiaPost.immagine =copiaPost.immagine;
   res.render("post", { copiaPost });
 });
 
 app.post("/admin", (req, res) => {
   const { admin_name, admin_password } = req.body;
   if (admin_name === "admin1" && admin_password === "123456789") {
-    req.session.verifcata = true;
+    req.session.verificata = true;
     res.redirect("admin");
   } else {
+    console.log("post");
     res.redirect("logAdmin.html?error=1");
   }
 });
@@ -108,15 +113,16 @@ app.get("/admin", verifcaAut, (req, res) => {
 
 app.get("/log", (req, res) => {
   //pezzo di codice che serve a far in modo che quando si è gia autenticati non ti fa passare per log
-  if (req.session.verifcata) {
+  if (req.session.verificata) {
     res.render("admin", { dati });
   } else {
     const logAdminPath = path.join(__dirname, "public", "logAdmin.html");
+    console.log("log");
     res.sendFile(logAdminPath);
   }
 });
 
-app.post("/admin/posts",upload.single('img') ,(req, res) => {
+app.post("/admin/posts",upload.single('img') ,async (req, res) => {
   const { title, content } = req.body;
   const newPost = {
     id: dati.length + 1,
@@ -126,7 +132,7 @@ app.post("/admin/posts",upload.single('img') ,(req, res) => {
     Comment: []
   };
   dati.push(newPost);
-  save();
+  await save();
   res.redirect("/");
 });
 
@@ -134,7 +140,7 @@ app.get("/admin/new", (req, res) => {
   res.render("add-post");
 });
 
-app.post("/addCommento/:id", (req, res) => {
+app.post("/addCommento/:id", async (req, res) => {
   const postId = parseInt(req.params.id);
   const autore = req.body.autore;
   const contenuto = req.body.contenuto;
@@ -149,25 +155,52 @@ app.post("/addCommento/:id", (req, res) => {
 
   if (post) {
     post.Comment.push(nuovoCommento);
-    save();
+    await save();
   }
   
   res.redirect("/posts/" + postId);
 });
 
 
+app.get("/admin/mod/:id",(req,res)=>{
+  let post = dati.find(post => post.id == req.params.id);
+  let copiaPost = post;//post su cui ci posso lavorare in sicurezza
+  res.render("mod-post", { copiaPost });
+});
 
+app.post("/modifica/post/:id",upload.single('img'),async (req,res)=>{
+  const postId = parseInt(req.params.id);
+  let post = dati.find(post => post.id == postId);
+  const { title, content } = req.body;
+  post.title=title;
+  post.content=content;
+  if (req.file !== undefined) {
+    fs.unlink(path.join(rottaUploads, post.immagine), (err)=>{
+      if(err){
+        throw err;
+      }
+    });
+  }
+  post.immagine=req.file.filename;
+  await save();
+  res.redirect("/posts/"+req.params.id);
+});
 
-app.get("/admin/delete/:id", (req, res) => {
+app.get("/admin/delete/:id", async (req, res) => {
   const postId = parseInt(req.params.id);
   const postIndex = dati.findIndex((post) => post.id === postId);
   if (postIndex !== -1) {
     dati.splice(postIndex, 1);
   }
-  save();
+  await save();
   res.redirect("/admin");
 });
 
 app.listen(port, () => {
   console.log(`Server avviato su http://localhost:${port}`);
 });
+
+}
+
+avvioServer();
+

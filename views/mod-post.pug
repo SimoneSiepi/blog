@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    if copiaPost 
+
+        h2(class='headerNewPost') Modifica Post
+        form(action='/modifica/post/'+copiaPost.id, method='POST', class='formNewPost', enctype="multipart/form-data")
+            label(for='title') Titolo:
+            input(type='text', id='title', name='title',class='titleInputNewPost' value=copiaPost.title)
+            br
+            label(for='content') Testo:
+            textarea(id='content', name='content',class='textInputNewPost')=copiaPost.content
+            br
+            label(for="img") immagine:
+            input(type="file" name="img" id="img" accept="image/*")
+            br
+            input(type='submit', value='modifica', id='submitNewPost')
+    else 
+        p post non trovato
